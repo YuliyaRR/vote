@@ -1,8 +1,8 @@
 package groupwork.web;
 
-import groupwork.helper.Provider;
 import groupwork.dto.SingerDTO;
 import groupwork.service.api.ISingerService;
+import groupwork.service.fabrics.SingersServiceSingleton;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,7 +22,7 @@ public class SingerServlet extends HttpServlet {
     private final ISingerService singerService;
 
     public SingerServlet() {
-        this.singerService = Provider.loadSingerService();
+        this.singerService = SingersServiceSingleton.getInstance();
     }
 
     @Override

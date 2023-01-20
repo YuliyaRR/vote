@@ -1,6 +1,6 @@
 package groupwork.dao.fabrics;
 
-import groupwork.dao.StatisticDAO_DB;
+import groupwork.dao.db.StatisticDAO_DB;
 import groupwork.dao.api.IStatisticDAO_DB;
 
 public class StatisticDaoDBSingleton {

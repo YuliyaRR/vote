@@ -2,9 +2,9 @@ package groupwork.web;
 
 import groupwork.dto.GenreDTO;
 import groupwork.dto.SingerDTO;
-import groupwork.helper.Provider;
 import groupwork.dto.AllStatisticDTO;
 import groupwork.service.api.IStatisticsService;
+import groupwork.service.fabrics.StatisticServiceSingleton;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,7 +22,7 @@ public class ResultVotingServlet extends HttpServlet {
     private final IStatisticsService statisticsService;
 
     public ResultVotingServlet() {
-        this.statisticsService = Provider.loadStatisticService();
+        this.statisticsService = StatisticServiceSingleton.getInstance();
     }
 
     @Override

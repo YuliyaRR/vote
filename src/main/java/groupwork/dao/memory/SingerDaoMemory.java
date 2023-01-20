@@ -1,4 +1,4 @@
-package groupwork.dao;
+package groupwork.dao.memory;
 
 import groupwork.dao.api.ISingerDao;
 import groupwork.dto.SingerDTO;
@@ -42,7 +42,7 @@ public class SingerDao implements ISingerDao {
             singerDTO.setId(id);
             singers.put(id, singerDTO);
         } else {
-            throw new IllegalArgumentException("Такой жанр уже существует");
+            throw new IllegalArgumentException("Такой исполнитель уже существует");
         }
     }
 
@@ -52,7 +52,7 @@ public class SingerDao implements ISingerDao {
         if (checkDuplicate(name)) {
             singers.put(singerDTO.getId(), singerDTO);
         } else {
-            throw new IllegalArgumentException("Такой жанр уже существует");
+            throw new IllegalArgumentException("Такой исполнитель уже существует");
         }
     }
 

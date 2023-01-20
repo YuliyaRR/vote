@@ -1,6 +1,6 @@
 package groupwork.dao.fabrics;
 
-import groupwork.dao.GenreDAO_DB;
+import groupwork.dao.db.GenreDAO_DB;
 import groupwork.dao.api.IGenreDao;
 
 public class GenreDaoDBSingleton {

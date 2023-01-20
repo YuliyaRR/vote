@@ -1,6 +1,6 @@
 package groupwork.dao.fabrics;
 
-import groupwork.dao.SingerDAO_DB;
+import groupwork.dao.db.SingerDAO_DB;
 import groupwork.dao.api.ISingerDao;
 
 public class SingerDaoDBSingleton {

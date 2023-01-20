@@ -1,6 +1,6 @@
 package groupwork.dao.fabrics;
 
-import groupwork.dao.SingerDao;
+import groupwork.dao.memory.SingerDao;
 import groupwork.dao.api.ISingerDao;
 
 public class SingerDaoSingleton {

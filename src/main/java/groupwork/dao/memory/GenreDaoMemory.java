@@ -1,4 +1,4 @@
-package groupwork.dao;
+package groupwork.dao.memory;
 
 import groupwork.dao.api.IGenreDao;
 import groupwork.dto.GenreDTO;

@@ -1,8 +1,8 @@
 package groupwork.web;
 
-import groupwork.helper.Provider;
 import groupwork.dto.GenreDTO;
 import groupwork.service.api.IGenreService;
+import groupwork.service.fabrics.GenresServiceSingleton;
 
 
 import javax.servlet.ServletException;
@@ -22,7 +22,7 @@ public class GenreServlet extends HttpServlet {
     private final IGenreService genreService;
 
     public GenreServlet() {
-        this.genreService = Provider.loadGenreService();
+        this.genreService = GenresServiceSingleton.getInstance();
     }
 
     @Override

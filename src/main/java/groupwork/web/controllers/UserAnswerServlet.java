@@ -1,8 +1,9 @@
 package groupwork.web;
 
-import groupwork.helper.Provider;
+import groupwork.dto.SavedVoiceDTO;
 import groupwork.dto.VoiceDTO;
 import groupwork.service.api.IVotesService;
+import groupwork.service.fabrics.VoteServiceSingleton;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 @WebServlet(name = "UserAnswerServlet", urlPatterns = "/answer")
@@ -23,7 +25,18 @@ public class UserAnswerServlet extends HttpServlet {
     private final String ABOUT_USER_PARAM_NAME = "about_user";
 
     public UserAnswerServlet() {
-        this.service = Provider.loadVoteService();
+        this.service = VoteServiceSingleton.getInstance();
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        resp.setContentType("text/html; charset=UTF-8");
+
+        PrintWriter writer = resp.getWriter();
+
+        List<SavedVoiceDTO> listVoice = service.get();
+        listVoice.forEach(voice -> writer.write("<p>" + voice + "</p>"));
     }
 
     @Override
@@ -74,5 +87,7 @@ public class UserAnswerServlet extends HttpServlet {
         } catch (Exception e) {
             writer.write(e.getMessage());
         }
+
+
     }
 }
