@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 
-public class SingerDao implements ISingerDao {
+public class SingerDaoMemory implements ISingerDao {
     private Map<Integer, SingerDTO> singers = new ConcurrentHashMap<>();
 
     {
@@ -18,27 +18,29 @@ public class SingerDao implements ISingerDao {
     }
 
     @Override
-    public List<SingerDTO> getSingerList() {
+    public synchronized List<SingerDTO> getSingerList() {
         return new ArrayList<>(singers.values());
     }
 
 
     @Override
-    public boolean isContain(int id) {
+    public synchronized boolean isContain(int id) {
         return singers.containsKey(id);
     }
 
     @Override
-    public void delete(SingerDTO singerDTO) {
+    public synchronized void delete(SingerDTO singerDTO) {
         int id = singerDTO.getId();
         singers.remove(id);
     }
 
     @Override
-    public void create(SingerDTO singerDTO) {
+    public synchronized void create(SingerDTO singerDTO) {
         String name = singerDTO.getName();
         if (checkDuplicate(name)) {
-            int id = getMaxID();
+            int id = singers.keySet().stream()
+                    .max(Comparator.comparing(Integer::intValue))
+                    .get() + 1;
             singerDTO.setId(id);
             singers.put(id, singerDTO);
         } else {
@@ -47,7 +49,7 @@ public class SingerDao implements ISingerDao {
     }
 
     @Override
-    public void update(SingerDTO singerDTO) {
+    public synchronized void update(SingerDTO singerDTO) {
         String name = singerDTO.getName();
         if (checkDuplicate(name)) {
             singers.put(singerDTO.getId(), singerDTO);
@@ -56,11 +58,9 @@ public class SingerDao implements ISingerDao {
         }
     }
 
-    private synchronized int getMaxID(){
-        int currID = singers.keySet().stream()
-                .max(Comparator.comparing(Integer::intValue))
-                .get();
-        return ++currID;
+    @Override
+    public synchronized SingerDTO getSinger(int id) {
+        return singers.get(id);
     }
 
     private synchronized boolean checkDuplicate(String name) {

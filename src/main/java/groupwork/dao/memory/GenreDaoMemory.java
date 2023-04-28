@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class GenreDao implements IGenreDao {
+public class GenreDaoMemory implements IGenreDao {
 
     private Map<Integer, GenreDTO> genres = new ConcurrentHashMap<>();
 
@@ -27,26 +27,28 @@ public class GenreDao implements IGenreDao {
     }
 
     @Override
-    public List<GenreDTO> getGenreList() {
+    public synchronized List<GenreDTO> getGenreList() {
         return new ArrayList<>(genres.values());
     }
 
     @Override
-    public boolean isContain(int id) {
+    public synchronized boolean isContain(int id) {
         return genres.containsKey(id);
     }
 
     @Override
-    public void delete(GenreDTO genreDTO) {
+    public synchronized void delete(GenreDTO genreDTO) {
         int id = genreDTO.getId();
         genres.remove(id);
     }
 
     @Override
-    public void create(GenreDTO genreDTO) {
+    public synchronized void create(GenreDTO genreDTO) {
         String name = genreDTO.getName();
         if (checkDuplicate(name)) {
-            int id = getMaxID();
+            int id = genres.keySet().stream()
+                    .max(Comparator.comparing(Integer::intValue))
+                    .get() + 1;
             genreDTO.setId(id);
             genres.put(id, genreDTO);
         } else {
@@ -55,21 +57,18 @@ public class GenreDao implements IGenreDao {
     }
 
     @Override
-    public void update(GenreDTO genreDTO) {
+    public synchronized void update(GenreDTO genreDTO) {
         String name = genreDTO.getName();
         if (checkDuplicate(name)) {
             genres.put(genreDTO.getId(), genreDTO);
         } else {
             throw new IllegalArgumentException("Такой жанр уже существует");
         }
-
     }
 
-    private synchronized int getMaxID(){
-        int currID = genres.keySet().stream()
-                .max(Comparator.comparing(Integer::intValue))
-                .get();
-        return ++currID;
+    @Override
+    public GenreDTO getGenre(int id) {
+        return this.genres.get(id);
     }
 
     private synchronized boolean checkDuplicate(String name) {

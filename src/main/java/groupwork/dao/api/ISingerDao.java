@@ -15,4 +15,6 @@ public interface ISingerDao {
     void create(SingerDTO singerDTO);
 
     void update(SingerDTO singerDTO);
+
+    SingerDTO getSinger(int id);
 }

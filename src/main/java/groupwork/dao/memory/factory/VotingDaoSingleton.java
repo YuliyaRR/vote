@@ -1,11 +1,11 @@
-package groupwork.dao.fabrics;
+package groupwork.dao.memory.factory;
 
-import groupwork.dao.memory.VotingDao;
+import groupwork.dao.memory.VotingDaoMemory;
 import groupwork.dao.api.IVotingDao;
 
 
 public class VotingDaoSingleton {
-    private volatile static VotingDao instance;
+    private volatile static VotingDaoMemory instance;
 
     private VotingDaoSingleton() {
     }
@@ -14,7 +14,7 @@ public class VotingDaoSingleton {
         if (instance == null) {
             synchronized (VotingDaoSingleton.class) {
                 if (instance == null) {
-                    instance = new VotingDao();
+                    instance = new VotingDaoMemory();
                 }
             }
         }

@@ -15,4 +15,6 @@ public interface IGenreDao {
     void create(GenreDTO genreDTO);
 
     void update(GenreDTO genreDTO);
+
+    GenreDTO getGenre(int id);
 }

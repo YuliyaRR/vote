@@ -1,10 +1,10 @@
-package groupwork.dao.fabrics;
+package groupwork.dao.memory.factory;
 
-import groupwork.dao.memory.GenreDao;
+import groupwork.dao.memory.GenreDaoMemory;
 import groupwork.dao.api.IGenreDao;
 
 public class GenreDaoSingleton {
-    private volatile static GenreDao instance;
+    private volatile static GenreDaoMemory instance;
 
     private GenreDaoSingleton() {
     }
@@ -13,7 +13,7 @@ public class GenreDaoSingleton {
         if (instance == null) {
             synchronized (GenreDaoSingleton.class) {
                 if (instance == null) {
-                    instance = new GenreDao();
+                    instance = new GenreDaoMemory();
                 }
             }
         }
