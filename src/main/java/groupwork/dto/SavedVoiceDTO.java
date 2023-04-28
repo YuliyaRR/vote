@@ -3,7 +3,7 @@ package groupwork.dto;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class SavedVoiceDTO {
+public class SavedVoiceDTO implements Comparable<SavedVoiceDTO>{
     private VoiceDTO voice;
     private LocalDateTime creationTime;
 
@@ -39,6 +39,11 @@ public class SavedVoiceDTO {
         if (o == null || getClass() != o.getClass()) return false;
         SavedVoiceDTO that = (SavedVoiceDTO) o;
         return Objects.equals(voice, that.voice) && Objects.equals(creationTime, that.creationTime);
+    }
+
+    @Override
+    public int compareTo(SavedVoiceDTO o) {
+        return o.getCreationTime().compareTo(this.creationTime);
     }
 
     @Override
