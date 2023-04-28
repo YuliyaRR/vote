@@ -1,6 +1,6 @@
 package groupwork.service.fabrics;
 
-import groupwork.dao.fabrics.VotingDaoSingleton;
+import groupwork.dao.provider.ChoiceDaoProvider;
 import groupwork.service.VoteService;
 import groupwork.service.api.IVotesService;
 
@@ -12,7 +12,10 @@ public class VoteServiceSingleton {
         if (instance == null) {
             synchronized (VoteServiceSingleton.class) {
                 if (instance == null) {
-                    instance = new VoteService(VotingDaoSingleton.getInstance(), SingersServiceSingleton.getInstance(), GenresServiceSingleton.getInstance());
+                    instance = new VoteService(ChoiceDaoProvider.getInstance().votingDao(),
+                            SingersServiceSingleton.getInstance(),
+                            GenresServiceSingleton.getInstance(),
+                            SendMailServiceSingleton.getInstance());
                 }
             }
         }

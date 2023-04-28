@@ -16,4 +16,6 @@ public interface IGenreService {
 
     void update(GenreDTO genreDTO);
 
+    GenreDTO getGenre(int id);
+
 }

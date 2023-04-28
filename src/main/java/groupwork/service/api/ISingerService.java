@@ -16,4 +16,6 @@ public interface ISingerService {
 
     void update(SingerDTO singerDTO);
 
+    SingerDTO getSinger(int id);
+
 }

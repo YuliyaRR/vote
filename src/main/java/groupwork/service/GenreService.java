@@ -75,6 +75,9 @@ public class GenreService implements IGenreService {
             throw new IllegalArgumentException("Нет жанра для обновления с таким id");
         }
 
-
+    }
+    @Override
+    public GenreDTO getGenre(int id) {
+        return this.dao.getGenre(id);
     }
 }

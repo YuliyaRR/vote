@@ -1,7 +1,6 @@
 package groupwork.service.fabrics;
 
-
-import groupwork.dao.fabrics.GenreDaoSingleton;
+import groupwork.dao.provider.ChoiceDaoProvider;
 import groupwork.service.GenreService;
 import groupwork.service.api.IGenreService;
 
@@ -15,7 +14,7 @@ public class GenresServiceSingleton {
         if (instance == null) {
             synchronized (GenresServiceSingleton.class) {
                 if (instance == null) {
-                    instance = new GenreService(GenreDaoSingleton.getInstance());
+                    instance = new GenreService(ChoiceDaoProvider.getInstance().genreDao());
                 }
             }
         }
