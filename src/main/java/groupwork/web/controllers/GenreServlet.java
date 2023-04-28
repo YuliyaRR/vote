@@ -1,4 +1,4 @@
-package groupwork.web;
+package groupwork.web.controllers;
 
 import groupwork.dto.GenreDTO;
 import groupwork.service.api.IGenreService;
@@ -64,7 +64,7 @@ public class GenreServlet extends HttpServlet {
             writer.write("<p>Genre deleted successfully</p>");
 
         }  catch (RuntimeException e){
-            writer.write("<p>" + e.getMessage() + "</p>");
+            writer.write("<p>" + e.getMessage() + ": " + e.getCause() + "</p>");
         }
 
     }
@@ -91,9 +91,10 @@ public class GenreServlet extends HttpServlet {
 
             genreService.create(genreDTO);
             writer.write("<p>Genre created successfully</p>");
+            resp.setStatus(201);
 
         } catch (RuntimeException e){
-            writer.write("<p>" + e.getMessage() + "</p>");
+            writer.write("<p>" + e.getMessage() + ": " + e.getCause() + "</p>");
 
         }
     }
@@ -121,7 +122,11 @@ public class GenreServlet extends HttpServlet {
             writer.write("<p>Genre updated successfully</p>");
 
         } catch (RuntimeException e){
-            writer.write("<p>" + e.getMessage() + "</p>");
+            if (e.getCause() != null) {
+                writer.write("<p>" + e.getMessage() + ": " + e.getCause() + "</p>");
+            } else {
+                writer.write("<p>" + e.getMessage() + "</p>");
+            }
 
         }
     }

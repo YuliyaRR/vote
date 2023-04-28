@@ -1,4 +1,4 @@
-package groupwork.web;
+package groupwork.web.controllers;
 
 import groupwork.dto.GenreDTO;
 import groupwork.dto.SingerDTO;

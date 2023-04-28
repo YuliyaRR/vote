@@ -1,4 +1,4 @@
-package groupwork.web;
+package groupwork.web.controllers;
 
 import groupwork.dto.SingerDTO;
 import groupwork.service.api.ISingerService;
@@ -72,6 +72,7 @@ public class SingerServlet extends HttpServlet {
 
             singerService.create(new SingerDTO(singerName));
             writer.write("<p>Singer created successfully</p>");
+            resp.setStatus(201);
 
         } catch (RuntimeException e){
             writer.write("<p>" + e.getMessage() + "</p>");

@@ -1,4 +1,4 @@
-package groupwork.web;
+package groupwork.web.controllers;
 
 import groupwork.dto.SavedVoiceDTO;
 import groupwork.dto.VoiceDTO;
@@ -23,12 +23,13 @@ public class UserAnswerServlet extends HttpServlet {
     private final String SINGER_PARAM_NAME = "singer";
     private final String GENRE_PARAM_NAME = "genre";
     private final String ABOUT_USER_PARAM_NAME = "about_user";
+    private final String EMAIL_USER_PARAM_NAME = "email";
 
     public UserAnswerServlet() {
         this.service = VoteServiceSingleton.getInstance();
     }
 
-    @Override
+    @Override //temporarily
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=UTF-8");
@@ -55,7 +56,7 @@ public class UserAnswerServlet extends HttpServlet {
             String[] singers = parameterMap.get(SINGER_PARAM_NAME);
 
             if (singers == null || singers.length > 1) {
-                throw new Exception("Choose one singer");
+                throw new IllegalArgumentException("Choose one singer");
             }
 
             int singer = Integer.parseInt(singers[0]);
@@ -73,9 +74,21 @@ public class UserAnswerServlet extends HttpServlet {
 
             String[] aboutUsers = parameterMap.get(ABOUT_USER_PARAM_NAME);
 
-            String aboutUser = (aboutUsers == null) ? null : aboutUsers[0];
+            if(aboutUsers == null) {
+                throw new IllegalArgumentException("Enter info about you");
+            }
 
-            VoiceDTO voiceDTO = new VoiceDTO(singer, intGenre, aboutUser);
+            String aboutUser = aboutUsers[0];
+
+            String [] emails = parameterMap.get(EMAIL_USER_PARAM_NAME);
+
+            if(emails == null) {
+                throw new IllegalArgumentException("Enter your email");
+            }
+
+            String email = emails[0];
+
+            VoiceDTO voiceDTO = new VoiceDTO(singer, intGenre, aboutUser, email);
 
             service.save(voiceDTO);
 
@@ -84,7 +97,7 @@ public class UserAnswerServlet extends HttpServlet {
             String contextPath = req.getContextPath();
             resp.sendRedirect(contextPath + "/result");
 
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             writer.write(e.getMessage());
         }
 
