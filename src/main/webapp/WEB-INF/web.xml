@@ -6,4 +6,8 @@
 
     <display-name>vote-group-app</display-name>
 
+    <listener>
+        <listener-class>groupwork.web.listener.PropertiesLoaderListener</listener-class>
+    </listener>
+
 </web-app>
